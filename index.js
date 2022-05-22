@@ -13,28 +13,28 @@ app.use(express())
 
 
 
-// const uri = "mongodb+srv://assignment12:G7YlvVSoSB0K2HoS@cluster0.hfl6b.mongodb.net/?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const uri = "mongodb+srv://assignment12:G7YlvVSoSB0K2HoS@cluster0.hfl6b.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
-// async function run() {
-//     try {
-//         await client.connect();
-//         console.log('db connect');
-//         const servicesCollection = client.db("assignment12").collection("services");
+async function run() {
+    try {
+        await client.connect();
+        console.log('db connect');
+        const servicesCollection = client.db("assignment12").collection("services");
 
-//         app.get('/services', async (req, res) => {
-//             const query = {};
-//             const cursor = servicesCollection.find(query);
-//             const services = await cursor.toArray();
-//             res.send(services)
-//         })
-//     }
-//     finally {
+        app.get('/services', async (req, res) => {
+            const query = {};
+            const cursor = servicesCollection.find(query);
+            const services = await cursor.toArray();
+            res.send(services)
+        })
+    }
+    finally {
 
-//     }
-// }
-// run().catch(console.dir())
+    }
+}
+run().catch(console.dir())
 
 app.get('/', (req, res) => {
     res.send('Hello server is Running')
