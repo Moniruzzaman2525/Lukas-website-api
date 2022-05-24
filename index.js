@@ -38,6 +38,7 @@ async function run() {
         const servicesCollection = client.db("assignment12").collection("services");
         const bookingCollection = client.db("assignment12").collection("booking");
         const userCollection = client.db("assignment12").collection("users");
+        const profileCollection = client.db("assignment12").collection("profile");
 
 
 
@@ -47,10 +48,41 @@ async function run() {
             const services = await cursor.toArray();
             res.send(services)
         });
+
+        app.delete('/delete/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await servicesCollection.deleteOne(query);
+            res.send(result);
+        });
+        app.post('/add', async (req, res) => {
+            const newItem = req.body;
+            const result = await servicesCollection.insertOne(newItem);
+            res.send(result);
+        });
+
+
+        app.post('/update', async (req, res) => {
+            const newItem = req.body;
+            const result = await profileCollection.insertOne(newItem);
+            res.send(result);
+        });
+
+        app.get('/user', async (req, res) => {
+            const email = req.query.email;
+            const result = await profileCollection.findOne({ email })
+            if (result) {
+                res.send(result);
+            }
+            else {
+                res.send('User not Found')
+            }
+        })
+
         app.get('/user', verifyJWT, async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users)
-        })
+        });
 
 
         app.put('/user/admin/:email', verifyJWT, async (req, res) => {
