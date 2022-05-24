@@ -49,7 +49,7 @@ async function run() {
             res.send(services)
         });
 
-        app.delete('/delete/:id', async (req, res) => {
+        app.delete('/delete/services/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await servicesCollection.deleteOne(query);
@@ -79,7 +79,7 @@ async function run() {
             }
         })
 
-        app.get('/user', verifyJWT, async (req, res) => {
+        app.get('/users', verifyJWT, async (req, res) => {
             const users = await userCollection.find().toArray();
             res.send(users)
         });
@@ -110,7 +110,7 @@ async function run() {
         })
 
 
-        app.delete('/delete/:id', async (req, res) => {
+        app.delete('/delete/user/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await userCollection.deleteOne(query);
@@ -181,12 +181,13 @@ async function run() {
 
 
 
-        app.delete('/delete/:id', async (req, res) => {
+        app.delete('/delete/booking/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await bookingCollection.deleteOne(query);
             res.send(result);
         });
+
 
 
     }
