@@ -77,12 +77,7 @@ async function run() {
             res.send({ admin: isAdmin });
         })
 
-        app.delete('/delete/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await userCollection.deleteOne(query);
-            res.send(result);
-        });
+
 
 
         app.put('/user/:email', async (req, res) => {
