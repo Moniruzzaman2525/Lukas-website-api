@@ -54,8 +54,18 @@ async function run() {
                 payment_method_types: ['card']
             });
             res.send({ clientSecret: paymentIntent.client_secret })
-
         })
+
+
+
+
+        app.get('/booking/booking/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const booking = await bookingCollection.findOne(query);
+            res.send(booking)
+        })
+
 
 
         app.get('/services', async (req, res) => {
@@ -195,12 +205,7 @@ async function run() {
             res.send(addItems)
         })
 
-        app.get('/booking/:id', verifyJWT, async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const booking = await bookingCollection.findOne(query);
-            res.send(booking)
-        })
+
 
         app.delete('/delete/booking/:id', async (req, res) => {
             const id = req.params.id;
