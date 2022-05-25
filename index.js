@@ -42,6 +42,7 @@ async function run() {
         const userCollection = client.db("assignment12").collection("users");
         const profileCollection = client.db("assignment12").collection("profile");
         const paymentCollection = client.db("assignment12").collection("payments");
+        const reviewsCollection = client.db("assignment12").collection("reviews");
 
 
 
@@ -65,6 +66,36 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const booking = await bookingCollection.findOne(query);
             res.send(booking)
+        });
+
+        app.get("/reviews", async (req, res) => {
+            const reviews = await reviewsCollection.find({}).toArray();
+            res.send(reviews);
+        });
+        //API to post a review 
+        app.post('/review', async (req, res) => {
+            const newReview = req.body;
+            const result = await reviewsCollection.insertOne(newReview);
+            res.send(result)
+        })
+
+        // shipping update
+        app.put('/ship/:id', async (req, res) => {
+
+            const id = req.params.id;
+
+            const order = req.body;
+
+            const options = { upsert: true }
+            const filter = { _id: ObjectId(id) }
+            //  console.log(filter,"filter email");
+            const updateDoc = {
+                $set: {
+                    isDeliverd: true
+                }
+            };
+            const result = await bookingCollection.updateOne(filter, updateDoc, options)
+            res.send(result)
         })
 
         app.patch('/booking/:id', verifyJWT, async (req, res) => {
