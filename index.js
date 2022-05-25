@@ -16,7 +16,7 @@ app.use(express.json())
 // G7YlvVSoSB0K2HoS
 
 
-const uri = "mongodb+srv://assignment12:G7YlvVSoSB0K2HoS@cluster0.hfl6b.mongodb.net/?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.ACCESS_USER}:${process.env.ACCESS_PASS}@cluster0.hfl6b.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 function verifyJWT(req, res, next) {
