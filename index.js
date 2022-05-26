@@ -75,7 +75,7 @@ async function run() {
             res.send(booking)
         });
 
-        app.get("/reviews", verifyJWT, async (req, res) => {
+        app.get("/reviews", async (req, res) => {
             const reviews = await reviewsCollection.find({}).toArray();
             res.send(reviews);
         });
