@@ -60,7 +60,7 @@ async function run() {
         });
 
 
-        app.get('/user/profile/:email', async (req, res) => {
+        app.get('/user/profile/:email', verifyJWT, async (req, res) => {
             const email = req.params.email;
             const query = { email: email }
             const profile = await profileCollection.findOne(query)
@@ -68,14 +68,14 @@ async function run() {
             res.send(profile)
         })
 
-        app.get('/booking/booking/:id', async (req, res) => {
+        app.get('/booking/booking/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const booking = await bookingCollection.findOne(query);
             res.send(booking)
         });
 
-        app.get("/reviews", async (req, res) => {
+        app.get("/reviews", verifyJWT, async (req, res) => {
             const reviews = await reviewsCollection.find({}).toArray();
             res.send(reviews);
         });
@@ -87,7 +87,7 @@ async function run() {
         })
 
         // shipping update
-        app.put('/ship/:id', async (req, res) => {
+        app.put('/ship/:id', verifyJWT, async (req, res) => {
 
             const id = req.params.id;
 
@@ -142,16 +142,7 @@ async function run() {
         });
 
 
-        // app.put('/update', async (req, res) => {
-        //     const newItem = req.body;
-        //     const filter = { email: email };
-        //     const options = { upsert: true };
-        //     const updateDoc = {
-        //         $set: newItem
-        //     };
-        //     const result = await profileCollection.updateOne(updateDoc, filter, options);
-        //     res.send(result);
-        // });
+
 
         app.put('/update', async (req, res) => {
             const data = req.body;
