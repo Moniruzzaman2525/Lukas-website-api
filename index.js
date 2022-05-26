@@ -27,7 +27,7 @@ function verifyJWT(req, res, next) {
     const token = authHeader.split(' ')[1];
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
         if (err) {
-            return res.send(403).send({ message: 'Forbidden Access' })
+            return res.send(403).send({ message: 'Forbidden Access !!' })
         }
         req.decoded = decoded;
         next();
@@ -254,7 +254,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Hello server is Running')
+    res.send('Hey boy!! server is Running')
 });
 
 app.listen(port, () => {
