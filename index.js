@@ -60,6 +60,13 @@ async function run() {
         });
 
 
+        app.get('/user/profile/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email }
+            const profile = await profileCollection.findOne(query)
+            // console.log(profile);
+            res.send(profile)
+        })
 
         app.get('/booking/booking/:id', async (req, res) => {
             const id = req.params.id;
@@ -135,11 +142,27 @@ async function run() {
         });
 
 
-        app.post('/update', async (req, res) => {
-            const newItem = req.body;
-            const result = await profileCollection.insertOne(newItem);
+        // app.put('/update', async (req, res) => {
+        //     const newItem = req.body;
+        //     const filter = { email: email };
+        //     const options = { upsert: true };
+        //     const updateDoc = {
+        //         $set: newItem
+        //     };
+        //     const result = await profileCollection.updateOne(updateDoc, filter, options);
+        //     res.send(result);
+        // });
+
+        app.put('/update', async (req, res) => {
+            const data = req.body;
+            const filter = { email: data.email };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: data,
+            }
+            const result = await profileCollection.updateOne(filter, updateDoc, options);
             res.send(result);
-        });
+        })
 
         app.get('/user', async (req, res) => {
             const email = req.query.email;
