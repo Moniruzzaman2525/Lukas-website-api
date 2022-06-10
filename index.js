@@ -87,7 +87,7 @@ async function run() {
         })
 
         // shipping update
-        app.put('/ship/:id', verifyJWT, async (req, res) => {
+        app.put('/ship/:id', async (req, res) => {
 
             const id = req.params.id;
 
